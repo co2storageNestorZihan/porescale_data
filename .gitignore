@@ -56,3 +56,11 @@ temp/
 *.tmp
 *.bak
 
+# ignore virtual environment
+venv/
+# venvs
+# ignore path of .venvs
+.venvs/*
+# foam cases
+foam_cases/
+
