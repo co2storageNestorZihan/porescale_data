@@ -1,0 +1,36 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2006                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      voxelToFoamDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+fileName        "constant/porous_medium.raw";
+dimensions      (80 80 1);
+origin          (0 0 0);
+voxelSize       (1 1 1);
+
+// Value/material mapping
+// Format: value materialName
+valueMapping
+{
+    0   solid;      // Black pixels (solid)
+    1   fluid;      // White pixels (void)
+}
+
+// Boundary patch assignment
+// Format: materialName patchGroup
+boundaryMapping
+{
+    solid   wall;   // Solid material becomes wall boundaries
+    fluid   internal;  // Fluid volume
+}
