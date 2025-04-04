@@ -1,0 +1,33 @@
+Preparing the Image and Meshing
+First, use Python with the porespy library to read the 
+PIL image, stack it to 3D (e.g., 80x80x2), and 
+save as a .vti file. Then, use Paraview to clip 
+at a threshold (e.g., 127.5, inverting if needed) 
+and triangulate to create an .stl file of the pore space, 
+moving it to the constant/triSurface directory in your
+ OpenFOAM case. Create a background mesh with blockMesh, 
+ refine with snappyHexMesh -overwrite, check mesh quality 
+ with checkMesh -allTopology -allGeometry, and scale to 
+ physical units (e.g., micrometers) with 
+ transformPoints -scale "(1e-6 1e-6 1e-6)
+
+Setting Up the Simulation
+Use the simpleFoam solver for steady, incompressible flow. 
+Set voids (white pixels, pores) as the flow domain, 
+initially treated as empty phase (air) for meshing, 
+nd solids (black pixels, rock) as walls with 
+no-slip boundary conditions. For simulation, define 
+inlet and outlet boundaries with a pressure drop (e.g., 
+inlet fixedValue 0.001 m²/s², outlet 0 m²/s², corresponding 
+to 1 Pa with density 1000 kg/m³). Set fluid properties as 
+water with kinematic viscosity 1e-06 m²/s and density 1000 kg/m³. 
+Run the simulation with run.sh or simpleFoam, ensuring convergence
+ by checking log files.
+
+Calculating Permeability
+Post-process using postProcess -func writeCellVolumes 
+and export to VTK format with foamToVTK -useTimeName -latestTime
+ -poly. Use a Python script to calculate permeability using 
+ Darcy's law, applying the pressure drop to determine the 
+ permeability coefficient 
+k, typically yielding values like 2.71e-11 m² for similar cases.

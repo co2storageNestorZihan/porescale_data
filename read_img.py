@@ -3,7 +3,8 @@
 import os
 import numpy as np
 from PIL import Image
-
+import porespy as ps
+#%%
 # Load and process the binary image
 img = Image.open('sample_blobs/blob_network_0.5.png')
 print(f"Original image dimensions: {img.size}")
