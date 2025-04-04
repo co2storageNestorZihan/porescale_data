@@ -19,8 +19,24 @@ there are several steps need to be done:
 Preparing the Image and Meshing
 First, use Python with the porespy library to read the 
 PIL image, stack it to 3D (e.g., 80x80x2), and 
-save as a .vti file. Then, use Paraview to clip 
-at a threshold (e.g., 127.5, inverting if needed) 
-and triangulate to create an .stl file of the pore space, 
-moving it to the case_perm_1/constant/triSurface directory in your
- OpenFOAM case
+save as a .vti file. Then, use Paraview visualize the vti file.
+i think original image is already binary so no need to threshold the 
+image into segmented phases.
+
+
+ there are some existing code for your reference:
+
+ to_vtk
+to_vtk(im, filename, divide=False, downsample=False, voxel_size=1, vox=False)[source]
+Converts an array to a vtk file.
+
+
+there are two websites that you need read them for reference:
+website 1:
+https://porespy.org/modules/generated/generated/porespy.io.to_vtk.html
+
+website 2:
+https://lruepke.github.io/HTF_lecture/summer2022/lectures/L03/FirstCase.html#making-the-mesh
+
+
+
