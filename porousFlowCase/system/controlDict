@@ -22,19 +22,19 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         1000;
+endTime         1500;
 
 deltaT          1;
 
 writeControl    timeStep;
 
-writeInterval   100;
+writeInterval   50;
 
 purgeWrite      0;
 
 writeFormat     ascii;
 
-writePrecision  6;
+writePrecision  8;
 
 writeCompression off;
 
@@ -58,6 +58,22 @@ functions
         fields
         (
             U
+        );
+    }
+    
+    pressureDrop
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+        writeControl    writeTime;
+        log             true;
+        writeFields     false;
+        regionType      patch;
+        name            inlet;
+        operation       average;
+        fields
+        (
+            p
         );
     }
 }

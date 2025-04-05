@@ -7,13 +7,17 @@ cd $(dirname "$0")
 # Create triSurface directory if it doesn't exist
 mkdir -p constant/triSurface
 
-# Copy the STL file from foam_mesh to a temporary location
-cp ../foam_mesh/porous_model.stl constant/triSurface/temp.stl
+# Check if a VTI file exists in the geometry folder
+if [ -f "geometry/porous_model.vti" ]; then
+    echo "Found VTI file in geometry folder."
+    echo "Converting VTI to STL using ParaView is required (not automated)."
+    echo "Please use ParaView to convert geometry/porous_model.vti to constant/triSurface/porous_model.stl"
+    exit 1
+else
+    echo "ERROR: VTI file geometry/porous_model.vti not found."
+    echo "Please create it first using the PNG to VTI conversion process."
+    exit 1
+fi
 
-# Convert to binary format that OpenFOAM can read
-surfaceConvert constant/triSurface/temp.stl constant/triSurface/porous_model.stl
-
-# Remove the temporary file
-rm constant/triSurface/temp.stl
-
-echo "STL file converted and placed in constant/triSurface/" 
+# Note: The actual VTI to STL conversion requires ParaView and cannot be easily 
+# automated in a simple bash script. Please use the ParaView GUI or Python script. 

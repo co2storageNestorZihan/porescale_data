@@ -37,7 +37,10 @@ castellatedMeshControls
     maxGlobalCells 20000000;
     minRefinementCells 0;
     maxLoadUnbalance 0.10;
-    nCellsBetweenLevels 3;
+    nCellsBetweenLevels 2;
+    
+    // Required parameter for OpenFOAM 8
+    resolveFeatureAngle 30;
 
     // Explicit feature edge refinement
     features
@@ -49,7 +52,7 @@ castellatedMeshControls
     {
         solids
         {
-            level (0 0);
+            level (0 1);  // Increased level for better resolution
         }
     }
 
@@ -67,10 +70,10 @@ castellatedMeshControls
 snapControls
 {
     nSmoothPatch 3;
-    tolerance 2.0;
-    nSolveIter 30;
+    tolerance 1.0;       // Reduced tolerance for better accuracy
+    nSolveIter 50;       // Increased solver iterations for better convergence
     nRelaxIter 5;
-    nFeatureSnapIter 10;
+    nFeatureSnapIter 15; // Increased feature snap iterations
     implicitFeatureSnap false;
     explicitFeatureSnap false;
     multiRegionFeatureSnap false;

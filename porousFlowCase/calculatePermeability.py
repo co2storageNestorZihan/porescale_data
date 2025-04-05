@@ -30,17 +30,30 @@ def calculate_permeability(vtk_data, pressure_drop, dx, mu):
     # Extract velocity
     u = VN.vtk_to_numpy(vtk_data.GetCellData().GetArray('U'))
     u_x = u[:, 0]  # x component of velocity
+    u_y = u[:, 1]  # y component of velocity
+    u_z = u[:, 2]  # z component of velocity
     
     # Calculate volume-weighted average velocity
     total_volume = np.sum(v_cells)
-    avg_velocity_x = np.sum(v_cells * u_x) / total_volume
+    
+    # Calculate volume fluxes for each direction
+    q_x = v_cells * u_x
+    q_y = v_cells * u_y
+    
+    # Average velocity components
+    avg_velocity_x = np.sum(q_x) / total_volume
+    avg_velocity_y = np.sum(q_y) / total_volume
     
     # Calculate permeability using Darcy's law
     # K = μ * (ΔP/Δx)^(-1) * (average velocity)
     pressure_gradient = pressure_drop / dx
-    permeability = mu * avg_velocity_x / pressure_gradient
+    permeability_x = mu * avg_velocity_x / pressure_gradient
     
-    return permeability, avg_velocity_x, total_volume
+    # Calculate the magnitude for informational purposes
+    u_mag = np.sqrt(u_x**2 + u_y**2 + u_z**2)
+    avg_velocity_mag = np.sum(v_cells * u_mag) / total_volume
+    
+    return permeability_x, avg_velocity_x, avg_velocity_y, avg_velocity_mag, total_volume
 
 def main():
     # Find the latest time directory
@@ -61,19 +74,35 @@ def main():
     pressure_drop = 1.0  # Pa
     rho = 1000.0         # kg/m³
     nu = 1e-6            # m²/s
-    mu = rho * nu        # Pa·s
+    mu = rho * nu        # Pa·s (0.001 Pa·s for water)
+    
+    # Domain dimensions in meters after scaling
     dx = 80e-6           # m (domain length, 80 pixels scaled to micrometers)
     
     # Load data and calculate permeability
     vtk_data = load_vtk_data(vtk_file)
-    perm, avg_vel, vol = calculate_permeability(vtk_data, pressure_drop, dx, mu)
+    perm_x, avg_vel_x, avg_vel_y, avg_vel_mag, vol = calculate_permeability(vtk_data, pressure_drop, dx, mu)
     
     # Print results
     print("\nResults:")
-    print(f"Average x-velocity: {avg_vel:.6e} m/s")
     print(f"Total volume: {vol:.6e} m³")
-    print(f"Permeability: {perm:.6e} m²")
-    print(f"Permeability: {perm*1e12:.6f} darcy")
+    print(f"Average x-velocity: {avg_vel_x:.6e} m/s")
+    print(f"Average y-velocity: {avg_vel_y:.6e} m/s")
+    print(f"Average velocity magnitude: {avg_vel_mag:.6e} m/s")
+    print(f"Pressure gradient: {pressure_drop/dx:.6e} Pa/m")
+    print(f"Permeability in x-direction: {perm_x:.6e} m²")
+    print(f"Permeability in x-direction: {perm_x*1e12:.6f} darcy (1 darcy = 9.869233e-13 m²)")
+    
+    # Save results to file
+    with open('permeability_results.txt', 'w') as f:
+        f.write("Permeability Results\n")
+        f.write("===================\n\n")
+        f.write(f"Domain length: {dx:.6e} m\n")
+        f.write(f"Pressure drop: {pressure_drop:.6f} Pa\n")
+        f.write(f"Fluid viscosity: {mu:.6e} Pa·s\n")
+        f.write(f"Average x-velocity: {avg_vel_x:.6e} m/s\n")
+        f.write(f"Permeability: {perm_x:.6e} m²\n")
+        f.write(f"Permeability: {perm_x*1e12:.6f} darcy\n")
 
 if __name__ == "__main__":
     main() 

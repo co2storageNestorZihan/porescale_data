@@ -22,8 +22,7 @@ boundaryField
 {
     inlet
     {
-        type            fixedValue;
-        value           uniform (0.001 0 0);
+        type            zeroGradient;
     }
 
     outlet
@@ -44,6 +43,11 @@ boundaryField
     frontAndBack
     {
         type            empty;
+    }
+    
+    solids
+    {
+        type            noSlip;
     }
 }
 
