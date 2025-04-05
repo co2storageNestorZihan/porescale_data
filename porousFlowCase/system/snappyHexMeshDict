@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2106                                 |
+|  \\    /   O peration     | Version:  v8                                    |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -42,10 +42,6 @@ castellatedMeshControls
     // Explicit feature edge refinement
     features
     (
-        {
-            file "porous_model.stl";
-            level 0;
-        }
     );
 
     // Surface based refinement
@@ -76,7 +72,7 @@ snapControls
     nRelaxIter 5;
     nFeatureSnapIter 10;
     implicitFeatureSnap false;
-    explicitFeatureSnap true;
+    explicitFeatureSnap false;
     multiRegionFeatureSnap false;
 }
 

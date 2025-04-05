@@ -14,9 +14,6 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// Kinematic pressure: p/rho [m²/s²]
-// 0.001 m²/s² corresponds to 1 Pa with density 1000 kg/m³
-
 dimensions      [0 2 -2 0 0 0 0];
 
 internalField   uniform 0;
@@ -25,31 +22,25 @@ boundaryField
 {
     inlet
     {
-        type            fixedValue;
-        value           uniform 0.001;
+        type            zeroGradient;
     }
-    
+
     outlet
     {
         type            fixedValue;
         value           uniform 0;
     }
-    
+
     top
     {
         type            symmetryPlane;
     }
-    
+
     bottom
     {
         type            symmetryPlane;
     }
-    
-    solids
-    {
-        type            zeroGradient;
-    }
-    
+
     frontAndBack
     {
         type            empty;

@@ -22,29 +22,25 @@ boundaryField
 {
     inlet
     {
-        type            zeroGradient;
+        type            fixedValue;
+        value           uniform (0.001 0 0);
     }
-    
+
     outlet
     {
         type            zeroGradient;
     }
-    
+
     top
     {
         type            symmetryPlane;
     }
-    
+
     bottom
     {
         type            symmetryPlane;
     }
-    
-    solids
-    {
-        type            noSlip;
-    }
-    
+
     frontAndBack
     {
         type            empty;

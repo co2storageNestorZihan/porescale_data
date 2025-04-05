@@ -28,7 +28,7 @@ deltaT          1;
 
 writeControl    timeStep;
 
-writeInterval   1000;
+writeInterval   100;
 
 purgeWrite      0;
 
@@ -49,7 +49,7 @@ functions
     volumeAverageVelocity
     {
         type            volFieldValue;
-        libs            (fieldFunctionObjects);
+        libs            ("libfieldFunctionObjects.so");
         writeControl    writeTime;
         log             true;
         writeFields     false;
