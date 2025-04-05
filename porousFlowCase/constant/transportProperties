@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2006                                 |
+|  \\    /   O peration     | Version:  v2106                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -14,7 +14,10 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-// Properties of water
+// Water properties
 transportModel  Newtonian;
-nu              [0 2 -1 0 0 0 0] 1e-6;  // Kinematic viscosity of water
-rho             [1 -3 0 0 0 0 0] 1000;  // Density of water
+
+// Kinematic viscosity [m²/s]
+nu              [0 2 -1 0 0 0 0] 1e-06;
+
+// ************************************************************************* // 

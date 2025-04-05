@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2006                                 |
+|  \\    /   O peration     | Version:  v2106                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -14,23 +14,36 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-convertToMeters 1e-6;  // Scale to micrometers
+convertToMeters 1;
+
+// Image dimensions (80x80 pixels)
+lx0 0;
+ly0 0;
+lz0 0;
+
+lx1 80;
+ly1 80;
+lz1 1;
 
 vertices
 (
-    (0 0 0)       // Vertex 0
-    (80 0 0)      // Vertex 1
-    (80 80 0)     // Vertex 2
-    (0 80 0)      // Vertex 3
-    (0 0 1)       // Vertex 4
-    (80 0 1)      // Vertex 5
-    (80 80 1)     // Vertex 6
-    (0 80 1)      // Vertex 7
+    ($lx0 $ly0 $lz0)   //0
+    ($lx1 $ly0 $lz0)   //1
+    ($lx1 $ly1 $lz0)   //2
+    ($lx0 $ly1 $lz0)   //3
+    ($lx0 $ly0 $lz1)   //4
+    ($lx1 $ly0 $lz1)   //5
+    ($lx1 $ly1 $lz1)   //6
+    ($lx0 $ly1 $lz1)   //7
 );
 
 blocks
 (
-    hex (0 1 2 3 4 5 6 7) (80 80 1) simpleGrading (1 1 1)
+    hex (0 1 2 3 4 5 6 7) (40 40 1) simpleGrading (1 1 1)
+);
+
+edges
+(
 );
 
 boundary
@@ -43,23 +56,34 @@ boundary
             (0 4 7 3)
         );
     }
+    
     outlet
     {
         type patch;
         faces
         (
-            (1 5 6 2)
+            (1 2 6 5)
         );
     }
-    walls
+    
+    top
     {
-        type wall;
+        type symmetryPlane;
         faces
         (
-            (0 1 5 4)
             (3 7 6 2)
         );
     }
+    
+    bottom
+    {
+        type symmetryPlane;
+        faces
+        (
+            (0 1 5 4)
+        );
+    }
+    
     frontAndBack
     {
         type empty;
@@ -70,3 +94,5 @@ boundary
         );
     }
 );
+
+// ************************************************************************* // 

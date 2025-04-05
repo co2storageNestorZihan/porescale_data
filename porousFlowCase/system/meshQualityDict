@@ -1,0 +1,49 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2106                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      meshQualityDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+// Include defaults parameters from master dictionary
+#includeEtc "caseDicts/mesh/generation/meshQualityDict"
+
+//- Minimum face area. Set to <0 to disable.
+minFaceArea -1;
+
+//- Minimum cell volume. Set to <0 to disable.
+minVolume 1e-13;
+
+//- Minimum pyramid volume. Set to <0 to disable.
+minTetQuality 1e-30;
+
+//- Minimum face twist. Set to <-1 to disable. dot product of face normal
+// and face centre triangles normal
+minTwist 0.01;
+
+//- Minimum normalized cell determinant. Set to <0 to disable.
+minDeterminant 0.001;
+
+//- Minimum face flatness (1 = flat, 0 = null) 
+//  Set to <0 to disable.
+minFlatness 0.5;
+
+//- Maximum volume ratio: ratio of adjacent cells volumes. Set to <0 to disable.
+maxVolRatio 100;
+
+//- Maximum face skewness. Set to <0 to disable.
+maxSkewness 4;
+
+//- Maximum non-orthogonality angle. Is 10 degrees default in OpenFOAM
+maxNonOrtho 65;
+
+// ************************************************************************* // 

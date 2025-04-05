@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2006                                 |
+|  \\    /   O peration     | Version:  v2106                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -24,21 +24,20 @@ solvers
         smoother        GaussSeidel;
     }
 
-    U
+    "(U|k|epsilon|omega|f|v2)"
     {
         solver          smoothSolver;
-        smoother        GaussSeidel;
+        smoother        symGaussSeidel;
         tolerance       1e-8;
         relTol          0.1;
-        nSweeps         1;
     }
 }
 
 SIMPLE
 {
     nNonOrthogonalCorrectors 0;
-    consistent               yes;
-    
+    consistent      yes;
+
     residualControl
     {
         p               1e-5;
@@ -50,7 +49,9 @@ relaxationFactors
 {
     equations
     {
-        U               0.7;
-        p               0.3;
+        U               0.9;
+        p               0.7;
     }
 }
+
+// ************************************************************************* // 
