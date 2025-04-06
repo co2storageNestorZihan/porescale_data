@@ -20,28 +20,6 @@ internalField   uniform 0;
 
 boundaryField
 {
-    inlet
-    {
-        type            fixedValue;
-        value           uniform 0.001;
-    }
-
-    outlet
-    {
-        type            fixedValue;
-        value           uniform 0;
-    }
-
-    top
-    {
-        type            symmetryPlane;
-    }
-
-    bottom
-    {
-        type            symmetryPlane;
-    }
-
     frontAndBack
     {
         type            empty;

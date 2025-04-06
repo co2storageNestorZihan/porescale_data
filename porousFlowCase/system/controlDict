@@ -22,13 +22,13 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         1500;
+endTime         100;
 
 deltaT          1;
 
 writeControl    timeStep;
 
-writeInterval   50;
+writeInterval   2;
 
 purgeWrite      0;
 
@@ -69,7 +69,7 @@ functions
         log             true;
         writeFields     false;
         regionType      patch;
-        name            inlet;
+        name            frontAndBack;
         operation       average;
         fields
         (

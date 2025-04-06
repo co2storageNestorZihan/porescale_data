@@ -63,7 +63,7 @@ def main():
         sys.exit(1)
     
     latest_time = sorted(time_dirs)[-1]
-    vtk_file = os.path.join('VTK', f'{latest_time}.vtk')
+    vtk_file = os.path.join('VTK', f'{latest_time}')
     
     # Check if the file exists
     if not os.path.exists(vtk_file):

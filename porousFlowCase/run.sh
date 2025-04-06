@@ -45,7 +45,7 @@ runApplication $application
 # Post-processing
 echo "Post-processing results..."
 runApplication postProcess -func writeCellVolumes
-runApplication foamToVTK -useTimeName -latestTime -poly
+runApplication foamToVTK -useTimeName -poly
 
 # echo "Running permeability calculation..."
 # python3 calculatePermeability.py
